@@ -15,7 +15,14 @@ This project is licensed under the Apache License 2.0.
 
 ### Development Setup
 
-1. **Build and start the Docker container:**
+1. **Create a `.env` file** in the root of the project with the following
+   content:
+
+   ```plaintext
+   SERVER_NODE=messenger@chat_server
+   ```
+
+2. **Build and start the Docker container:**
 
    ```sh
    docker-compose down && docker-compose build && docker-compose up
@@ -23,13 +30,20 @@ This project is licensed under the Apache License 2.0.
 
 ### Production Setup
 
-1. **Build the production Docker image:**
+1. **Create a `.env.prod` file** in the root of the project with the appropriate
+   production configuration:
+
+   ```plaintext
+   SERVER_NODE=messenger@chat_server_prod
+   ```
+
+2. **Build the production Docker image:**
 
    ```sh
    docker-compose -f docker-compose.prod.yml build
    ```
 
-2. **Start the server in production mode:**
+3. **Start the server in production mode:**
 
    ```sh
    docker-compose -f docker-compose.prod.yml up
@@ -42,11 +56,21 @@ This project is licensed under the Apache License 2.0.
 - **Dockerfile.prod**: Production Dockerfile.
 - **docker-compose.yml**: Docker Compose configuration for development.
 - **docker-compose.prod.yml**: Docker Compose configuration for production.
+- **.env**: Environment variables for development (ignored by Git).
+- **.env.prod**: Environment variables for production (ignored by Git).
 
 ## Contributing
 
 Contributions are welcome! If you find this project useful or have ideas for
 improvements, please fork the repository and create a pull request.
+
+### Setting Up Your Development Environment
+
+1. **Fork the repository** and clone it to your local machine.
+2. **Create a .env file** in the root directory with the necessary environment
+   variables.
+3. **Follow the development setup instructions** to build and start the
+   Docker container.
 
 ## Contact
 
