@@ -19,6 +19,7 @@ RUN rebar3 get-deps
 # Shell script to compile, start the application, and watch for changes
 RUN echo '#!/bin/sh\n\
 if [ "$ENV" = "test" ]; then \n\
+  rebar3 eunit; \n\
   while true; do \n\
     inotifywait -e modify,create,delete -r src; \n\
     rebar3 eunit; \n\
