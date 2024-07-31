@@ -44,3 +44,6 @@ Thumbs.db
 
 # Ignore directory structure text files
 directory_structure.txt
+
+# Ignore project brainstorming files
+brainstorming*
