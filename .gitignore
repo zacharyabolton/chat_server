@@ -47,3 +47,6 @@ directory_structure.txt
 
 # Ignore project brainstorming files
 brainstorming*
+
+# Ignore environment files
+.env
