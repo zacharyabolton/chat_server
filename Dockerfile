@@ -18,14 +18,21 @@ RUN rebar3 get-deps
 
 # Shell script to compile, start the application, and watch for changes
 RUN echo '#!/bin/sh\n\
-rebar3 compile; \n\
-rebar3 shell & \n\
-while true; do \n\
-  inotifywait -e modify,create,delete -r src; \n\
+if [ "$ENV" = "test" ]; then \n\
+  while true; do \n\
+    inotifywait -e modify,create,delete -r src; \n\
+    rebar3 eunit; \n\
+  done; \n\
+else \n\
   rebar3 compile; \n\
-  pkill -f "beam.smp"; \n\
   rebar3 shell & \n\
-done' > /watch.sh
+  while true; do \n\
+    inotifywait -e modify,create,delete -r src; \n\
+    rebar3 compile; \n\
+    pkill -f "beam.smp"; \n\
+    rebar3 shell & \n\
+  done; \n\
+fi' > /watch.sh
 
 RUN chmod +x /watch.sh
 

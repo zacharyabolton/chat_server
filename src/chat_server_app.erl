@@ -12,6 +12,7 @@
 start(_StartType, _StartArgs) ->
     Server_Node = config:get_env("SERVER_NODE", "default@localhost"),
     io:format("Starting server on node: ~p~n", [Server_Node]),
+    io:format("THIS IS A TEST"),
     chat_server_sup:start_link().
 
 stop(_State) ->

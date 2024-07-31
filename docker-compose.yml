@@ -12,3 +12,13 @@ services:
       - ENV=development
       - SERVER_NODE
     command: sh -c "/watch.sh"
+
+  chat_server_tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app # Mount the current directory to the container for live reloading
+    environment:
+      - ENV=test
+    command: sh -c "/watch.sh"

@@ -28,6 +28,20 @@ This project is licensed under the Apache License 2.0.
    docker-compose down && docker-compose build && docker-compose up
    ```
 
+### Running Tests
+
+Tests are set up to run automatically on code changes, fitting the Test Driven
+Development (TDD) lifecycle.
+
+1. **Start the test service:**
+
+   ```sh
+   docker-compose up chat_server_tests
+   ```
+
+This command will start a container that watches for file changes in the `src`
+directory and runs the unit tests automatically using `rebar3 eunit`.
+
 ### Production Setup
 
 1. **Create a `.env.prod` file** in the root of the project with the appropriate
