@@ -11,11 +11,11 @@
 
 A simple chat server built with Erlang and Docker.
 
-## License
+## 📝 License
 
 This project is licensed under the Apache License 2.0.
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -37,7 +37,7 @@ This project is licensed under the Apache License 2.0.
    docker-compose down && docker-compose build && docker-compose up
    ```
 
-### Running Tests
+### 🧪 Running Tests
 
 Tests are set up to run automatically on code changes, fitting the Test Driven
 Development (TDD) lifecycle.
@@ -51,7 +51,7 @@ Development (TDD) lifecycle.
 This command will start a container that watches for file changes in the `src`
 directory and runs the unit tests automatically using `rebar3 eunit`.
 
-### Production Setup
+### 🏭 Production Setup
 
 1. **Create a `.env.prod` file** in the root of the project with the appropriate
    production configuration:
@@ -72,7 +72,7 @@ directory and runs the unit tests automatically using `rebar3 eunit`.
    docker-compose -f docker-compose.prod.yml up
    ```
 
-## Project Structure
+## 📂 Project Structure
 
 - **src/**: Erlang source files.
 - **Dockerfile**: Development Dockerfile.
@@ -82,7 +82,7 @@ directory and runs the unit tests automatically using `rebar3 eunit`.
 - **.env**: Environment variables for development (ignored by Git).
 - **.env.prod**: Environment variables for production (ignored by Git).
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! If you find this project useful or have ideas for
 improvements, please fork the repository and create a pull request.
@@ -90,18 +90,18 @@ improvements, please fork the repository and create a pull request.
 ### Setting Up Your Development Environment
 
 1. **Fork the repository** and clone it to your local machine.
-2. **Create a .env file** in the root directory with the necessary environment
+2. **Create a `.env` file** in the root directory with the necessary environment
    variables.
 3. **Follow the development setup instructions** to build and start the
    Docker container.
 
-## Contact
+## 📧 Contact
 
 For any questions or inquiries, please contact [Zac Bolton](mailto:zacbolton2129@gmail.com).
 
 ---
 
-### Notes
+### 📝 Notes
 
 This project serves as a practical example of Erlang development and Docker
 containerization. It aims to provide a solid foundation for further development
