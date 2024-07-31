@@ -1,0 +1,26 @@
+# Base image
+FROM erlang:latest
+
+# Install rebar3
+RUN wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3 && mv rebar3 /usr/local/bin/
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the project files
+COPY . .
+
+# Install dependencies and compile the project
+RUN rebar3 get-deps && rebar3 as prod compile
+
+# Create the release
+RUN rebar3 as prod release
+
+# Move the release to the correct location
+RUN mv _build/prod/rel/chat_server /app/chat_server
+
+# Clean up unnecessary files
+RUN rm -rf _build deps .rebar3 rebar.lock rebar.config README.md LICENSE.md docker-compose.yml Dockerfile Dockerfile.prod .git .gitignore
+
+# Set the entrypoint
+ENTRYPOINT ["/app/chat_server/bin/chat_server", "foreground"]
