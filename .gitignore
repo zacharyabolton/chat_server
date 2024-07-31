@@ -50,3 +50,4 @@ brainstorming*
 
 # Ignore environment files
 .env
+.env.prod
