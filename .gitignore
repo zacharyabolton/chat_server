@@ -41,3 +41,6 @@ node_modules/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Ignore directory structure text files
+directory_structure.txt
