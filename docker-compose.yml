@@ -1,0 +1,9 @@
+version: '3'
+services:
+  chat_server:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000" # Adjust the port as needed
+    command: sh -c "/watch.sh"

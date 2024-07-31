@@ -1,0 +1,48 @@
+# Ignore version control directories
+.git
+.gitignore
+.dockerignore
+
+# Ignore build artifacts
+_build/
+deps/
+ebin/
+*.beam
+*.o
+*.so
+*.a
+
+# Ignore rebar3 specific files and directories
+.rebar3
+.rebar
+_checkouts
+_vendor
+rebar.lock
+rebar3.crashdump
+
+# Ignore Erlang specific files and directories
+.eunit
+.erlang.cookie
+erl_crash.dump
+*.plt
+
+# Ignore logs
+log/
+logs/
+*.log
+
+# Ignore editor and IDE config files
+*.swp
+*.swo
+*.swm
+*~
+*.iml
+.idea/
+.vscode/
+
+# Ignore node_modules if using Node.js
+node_modules/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
