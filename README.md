@@ -1,6 +1,9 @@
 # Chat Server
 
-![Erlang Logo](https://www.erlang.org/favicon.ico) ![Docker Logo](https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png)
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px">
+  <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" style="width: 100px; height: auto;"/>
+  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" style="width: 100px; height: auto;"/>
+</div>
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
