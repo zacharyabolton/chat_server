@@ -1,8 +1,8 @@
 # Chat Server
 
-<div>
-  <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" />
-  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" />
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px">
+  <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" style="width: 100px; height: auto;"/>
+  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" style="width: 100px; height: auto;"/>
 </div>
 
 ![Project Status](https://img.shields.io/badge/status-in%20development-yellow)
