@@ -34,7 +34,7 @@ This project is licensed under the Apache License 2.0.
 2. **Build and start the Docker container:**
 
    ```sh
-   docker-compose build
+   docker-compose down; docker-compose build
    ```
 
 3. **Start the server:**
