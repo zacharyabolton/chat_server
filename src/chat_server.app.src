@@ -1,15 +1,22 @@
 {application, chat_server,
- [{description, "An OTP application"},
+ [{description, "Chat server application"},
   {vsn, "0.1.0"},
-  {registered, []},
-  {mod, {chat_server_app, []}},
+  {modules,
+   [chat_server_app,
+    chat_server_sup,
+    chat_server_user,
+    config
+   ]},
+  {registered, [chat_server]},
   {applications,
    [kernel,
     stdlib
    ]},
+  {mod, {chat_server_app, []}},
   {env,[]},
-  {modules, []},
-
+  {included_applications, []},
+  {maxT, infinity},
+  {maxP, infinity},
   {licenses, ["Apache-2.0"]},
   {links, []}
  ]}.

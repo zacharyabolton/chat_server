@@ -8,7 +8,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start_link/0, add_user/2, get_user/1]).
+-export([start_link/0, start_link/1, add_user/3, get_user/2]).
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
@@ -19,13 +19,16 @@
 
 %% API Functions
 start_link() ->
-    gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+    start_link(?SERVER).
 
-add_user(Username, Password) ->
-    gen_server:call(?SERVER, {add_user, Username, Password}).
+start_link(Name) ->
+    gen_server:start_link({local, Name}, ?MODULE, [], []).
 
-get_user(Username) ->
-    gen_server:call(?SERVER, {get_user, Username}).
+add_user(Name, Username, Password) ->
+    gen_server:call(Name, {add_user, Username, Password}).
+
+get_user(Name, Username) ->
+    gen_server:call(Name, {get_user, Username}).
 
 %% gen_server Callbacks
 init([]) ->
