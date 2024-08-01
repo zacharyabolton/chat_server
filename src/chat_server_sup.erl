@@ -22,11 +22,11 @@ init([]) ->
                  intensity => 1,
                  period => 5},
     ChildSpecs = [
-        #{id => chat_server_user,
-          start => {chat_server_user, start_link, []},
+        #{id => chat_server,
+          start => {chat_server, start_link, []},
           restart => permanent,
           shutdown => 5000,
           type => worker,
-          modules => [chat_server_user]}
+          modules => [chat_server]}
     ],
     {ok, {SupFlags, ChildSpecs}}.

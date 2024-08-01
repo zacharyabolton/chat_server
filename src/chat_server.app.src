@@ -4,7 +4,7 @@
   {modules,
    [chat_server_app,
     chat_server_sup,
-    chat_server_user,
+    chat_server,
     config
    ]},
   {registered, [chat_server]},
