@@ -21,7 +21,7 @@ RUN echo '#!/bin/sh\n\
 if [ "$ENV" = "test" ]; then \n\
   rebar3 eunit; \n\
   while true; do \n\
-    inotifywait -e modify,create,delete -r src; \n\
+    inotifywait -e modify,create,delete -r src test; \n\
     rebar3 eunit; \n\
   done; \n\
 else \n\
