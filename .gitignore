@@ -52,6 +52,5 @@ brainstorming*
 .env
 .env.prod
 
-# Ignore config files
-config/*.config
-config/*.args
+# Ignore sensitive config information
+rebar.config.local
