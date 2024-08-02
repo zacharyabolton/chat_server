@@ -51,3 +51,6 @@ brainstorming*
 # Ignore environment files
 .env
 .env.prod
+
+# Ignore config files
+config/*.config
