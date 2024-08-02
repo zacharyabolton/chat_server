@@ -54,3 +54,4 @@ brainstorming*
 
 # Ignore config files
 config/*.config
+config/*.args
