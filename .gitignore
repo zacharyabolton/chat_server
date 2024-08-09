@@ -7,12 +7,11 @@ ebin
 *.so
 *.a
 
-# Ignore rebar3 config and lock files if not intended to be shared
+# Ignore rebar3 artifacts
 .rebar3
 .rebar
 _checkouts
 _vendor
-rebar.lock
 rebar3.crashdump
 
 # Ignore Erlang specific files and directories
@@ -54,3 +53,6 @@ brainstorming*
 
 # Ignore sensitive config information
 rebar.config.local
+
+# Ignore project images
+images/

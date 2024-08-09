@@ -17,7 +17,6 @@ ebin/
 .rebar
 _checkouts
 _vendor
-rebar.lock
 rebar3.crashdump
 
 # Ignore Erlang specific files and directories
@@ -52,3 +51,6 @@ directory_structure.txt
 
 # Ignore project brainstorming files
 brainstorming*
+
+# Ignore project images
+images/
