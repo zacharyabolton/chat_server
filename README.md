@@ -1,5 +1,7 @@
 # Chat Server
 
+<mark>THE FOLLOWING README IS DEFUNCT AND WILL BE UPDATED SHORTLY!</mark>
+
 <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px">
   <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" style="width: 100px; height: auto;"/>
   <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" style="width: 100px; height: auto;"/>
@@ -24,12 +26,17 @@ This project is licensed under the Apache License 2.0.
 
 ### Development Setup
 
-1. **Create a `.env` file** in the root of the project with the following
-   content:
+1. **Create a `rebar.config.local` file** in the root of the project with the
+   following content:
 
-   ```plaintext
-   SERVER_NODE=messenger@chat_server
+   ```erlang
+   {dist_node, [
+       {setcookie, 'your_local_cookie'},
+       {sname, 'your_local_node_name'}
+   ]}.
    ```
+
+   Note: Make sure to add `rebar.config.local` to your `.gitignore` file.
 
 2. **Build and start the Docker container:**
 
@@ -38,7 +45,6 @@ This project is licensed under the Apache License 2.0.
    ```
 
 3. **Start the server:**
-
    ```sh
    docker-compose up chat_server
    ```
@@ -49,7 +55,6 @@ Tests are set up to run automatically on code changes, fitting the Test Driven
 Development (TDD) lifecycle.
 
 1. **Start the test service:**
-
    ```sh
    docker-compose up chat_server_tests
    ```
@@ -59,21 +64,13 @@ directory and runs the unit tests automatically using `rebar3 eunit`.
 
 ### 🏭 Production Setup
 
-1. **Create a `.env.prod` file** in the root of the project with the appropriate
-   production configuration:
-
-   ```plaintext
-   SERVER_NODE=messenger@chat_server_prod
-   ```
-
-2. **Build the production Docker image:**
+1. **Build the production Docker image:**
 
    ```sh
    docker-compose -f docker-compose.prod.yml build
    ```
 
-3. **Start the server in production mode:**
-
+2. **Start the server in production mode:**
    ```sh
    docker-compose -f docker-compose.prod.yml up
    ```
@@ -85,8 +82,9 @@ directory and runs the unit tests automatically using `rebar3 eunit`.
 - **Dockerfile.prod**: Production Dockerfile.
 - **docker-compose.yml**: Docker Compose configuration for development.
 - **docker-compose.prod.yml**: Docker Compose configuration for production.
-- **.env**: Environment variables for development (ignored by Git).
-- **.env.prod**: Environment variables for production (ignored by Git).
+- **rebar.config**: Main rebar3 configuration file.
+- **rebar.config.script**: Script to include local configuration.
+- **rebar.config.local**: Local configuration file (not version controlled).
 
 ## 🤝 Contributing
 
@@ -96,8 +94,8 @@ improvements, please fork the repository and create a pull request.
 ### Setting Up Your Development Environment
 
 1. **Fork the repository** and clone it to your local machine.
-2. **Create a `.env` file** in the root directory with the necessary environment
-   variables.
+2. **Create a `rebar.config.local` file** in the root directory with the
+   necessary local settings.
 3. **Follow the development setup instructions** to build and start the
    Docker container.
 

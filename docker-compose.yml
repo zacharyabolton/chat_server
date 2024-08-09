@@ -1,24 +1,12 @@
-version: '3'
 services:
   chat_server:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - .:/app # Mount the current directory to the container for live reloading
     ports:
-      - "8000:8000" # Adjust the port as needed
-    environment:
-      - ENV=development
-      - SERVER_NODE
-    command: sh -c "/watch.sh"
-
-  chat_server_tests:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app # Mount the current directory to the container for live reloading
-    environment:
-      - ENV=test
-    command: sh -c "/watch.sh"
+      - "8080:8080" # Adjust the port as needed
+    develop:
+      watch:
+        - action: rebuild
+          path: ./src
+          target: /app/src

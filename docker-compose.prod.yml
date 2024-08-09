@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "8000:8000" # Adjust the port as needed
+      - "8080:8080" # Adjust the port as needed
     environment:
       - ENV=production
       - SERVER_NODE
