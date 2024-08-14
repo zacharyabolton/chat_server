@@ -1,10 +1,13 @@
 services:
-  chat_server:
+
+  chat_server_development:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Adjust the port as needed
+      - "8080:8080"
+    environment:
+      - ENV=development
     develop:
       watch:
         - action: rebuild

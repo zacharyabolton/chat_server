@@ -3,12 +3,16 @@
 %% @end
 %%%-------------------------------------------------------------------
 
-% -module(chat_server_tests).
-%
-% -include_lib("eunit/include/eunit.hrl").
-%
-% %% Test cases
-%
+-module(chat_server_tests).
+
+-include_lib("eunit/include/eunit.hrl").
+
+%% Test cases
+
+dummy_test() ->
+  io:format("Dummy test~n"),
+  ?assert(true).
+
 % top_lvl_sup_alive_test() ->
 %   ok = application:start(chat_server),
 %   ?assert(is_process_alive(whereis(chat_server_sup))),

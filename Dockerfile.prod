@@ -10,13 +10,13 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # build and cache dependencies as their own layer
 COPY rebar.config rebar.lock .
 RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 compile
+    rebar3 as prod compile
 
 FROM builder AS prod_compiled
 
 RUN --mount=target=. \
     --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 compile
+    rebar3 as prod compile
 
 FROM prod_compiled AS releaser
 
@@ -43,6 +43,7 @@ ENV COOKIE=chat_server \
     # chat_server specific env variables to act as defaults
     DB_HOST=127.0.0.1 \
     LOGGER_LEVEL=debug \
+    ENV=production \
     SBWT=none
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean

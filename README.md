@@ -1,7 +1,5 @@
 # Chat Server
 
-<mark>THE FOLLOWING README IS DEFUNCT AND WILL BE UPDATED SHORTLY!</mark>
-
 <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px">
   <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" style="width: 100px; height: auto;"/>
   <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" style="width: 100px; height: auto;"/>
@@ -19,34 +17,33 @@ This project is licensed under the Apache License 2.0.
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 📚 Prerequisites
 
+- Erlang/OTP 24
+- Rebar3
 - Docker
 - Docker Compose
 
-### Development Setup
+### Honorable Mentions
 
-1. **Create a `rebar.config.local` file** in the root of the project with the
-   following content:
+- [The Erlang Docs](https://www.erlang.org/)
+- [Adopting Erlang](https://adoptingerlang.org/) by Tristan Sloughter, Fred
+  Hebert, and Evan Vigil-McClanahan
+- [The Cowboy Documentation](https://ninenines.eu/docs/en/cowboy/2.9/guide/) by
+  Loïc Hoguin
+- ... and of course a myriad of other resources and contributors
 
-   ```erlang
-   {dist_node, [
-       {setcookie, 'your_local_cookie'},
-       {sname, 'your_local_node_name'}
-   ]}.
-   ```
+### 🛠️ Development Setup
 
-   Note: Make sure to add `rebar.config.local` to your `.gitignore` file.
-
-2. **Build and start the Docker container:**
+1. **Build the Docker image:**
 
    ```sh
    docker-compose down; docker-compose build
    ```
 
-3. **Start the server:**
+2. **Start the server** (with live code reloading):
    ```sh
-   docker-compose up chat_server
+   docker-compose up chat_server_development --watch
    ```
 
 ### 🧪 Running Tests
@@ -54,20 +51,24 @@ This project is licensed under the Apache License 2.0.
 Tests are set up to run automatically on code changes, fitting the Test Driven
 Development (TDD) lifecycle.
 
-1. **Start the test service:**
+1. **Install `rebar3_autotest` globally:**
+
+   - [github.com/NobbZ/rebar3_autotest](https://github.com/NobbZ/rebar3_autotest)
+
+2. **Run the autotest command** in your project's root:
    ```sh
-   docker-compose up chat_server_tests
+   rebar3 autotest
    ```
 
-This command will start a container that watches for file changes in the `src`
-directory and runs the unit tests automatically using `rebar3 eunit`.
+This command will run all unit tests in the `./test` directory whenever a file
+changes in the `./src` directory.
 
 ### 🏭 Production Setup
 
 1. **Build the production Docker image:**
 
    ```sh
-   docker-compose -f docker-compose.prod.yml build
+   docker-compose down; docker-compose -f docker-compose.prod.yml build
    ```
 
 2. **Start the server in production mode:**
@@ -83,8 +84,6 @@ directory and runs the unit tests automatically using `rebar3 eunit`.
 - **docker-compose.yml**: Docker Compose configuration for development.
 - **docker-compose.prod.yml**: Docker Compose configuration for production.
 - **rebar.config**: Main rebar3 configuration file.
-- **rebar.config.script**: Script to include local configuration.
-- **rebar.config.local**: Local configuration file (not version controlled).
 
 ## 🤝 Contributing
 
