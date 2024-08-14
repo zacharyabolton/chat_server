@@ -24,7 +24,7 @@ This project is licensed under the Apache License 2.0.
 - Docker
 - Docker Compose
 
-### Honorable Mentions
+### 🏅 Honorable Mentions
 
 - [The Erlang Docs](https://www.erlang.org/)
 - [Adopting Erlang](https://adoptingerlang.org/) by Tristan Sloughter, Fred

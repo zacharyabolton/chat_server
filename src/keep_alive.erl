@@ -8,7 +8,7 @@ start_link() ->
     keep_alive().
 
 keep_alive() ->
-  io:format("Keep alive sleeping on node 25~p~n", [node()]),
+  io:format("Keep alive sleeping on node ~p~n", [node()]),
   %% Sleep for 2 seconds
   timer:sleep(2000),
   keep_alive().
