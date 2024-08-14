@@ -15,6 +15,15 @@ A simple chat server built with Erlang and Docker.
 
 This project is licensed under the Apache License 2.0.
 
+## 🎖️ Honorable Mentions
+
+- [The Erlang Docs](https://www.erlang.org/)
+- [Adopting Erlang](https://adoptingerlang.org/) by Tristan Sloughter, Fred
+  Hebert, and Evan Vigil-McClanahan
+- [The Cowboy Documentation](https://ninenines.eu/docs/en/cowboy/2.9/guide/) by
+  Loïc Hoguin
+- ... and of course a myriad of other resources and contributors
+
 ## 🚀 Getting Started
 
 ### 📚 Prerequisites
@@ -23,15 +32,6 @@ This project is licensed under the Apache License 2.0.
 - Rebar3
 - Docker
 - Docker Compose
-
-### 🎖️ Honorable Mentions
-
-- [The Erlang Docs](https://www.erlang.org/)
-- [Adopting Erlang](https://adoptingerlang.org/) by Tristan Sloughter, Fred
-  Hebert, and Evan Vigil-McClanahan
-- [The Cowboy Documentation](https://ninenines.eu/docs/en/cowboy/2.9/guide/) by
-  Loïc Hoguin
-- ... and of course a myriad of other resources and contributors
 
 ### 🛠️ Development Setup
 
