@@ -90,14 +90,6 @@ changes in the `./src` directory.
 Contributions are welcome! If you find this project useful or have ideas for
 improvements, please fork the repository and create a pull request.
 
-### Setting Up Your Development Environment
-
-1. **Fork the repository** and clone it to your local machine.
-2. **Create a `rebar.config.local` file** in the root directory with the
-   necessary local settings.
-3. **Follow the development setup instructions** to build and start the
-   Docker container.
-
 ## 📧 Contact
 
 For any questions or inquiries, please contact [Zac Bolton](mailto:zacbolton2129@gmail.com).
