@@ -1,4 +1,4 @@
-name: Erlang CI
+name: chat_server CI
 
 on:
   push:
@@ -41,8 +41,3 @@ jobs:
     - name: Run Tests
       run: |
         docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 eunit"
-    # # If you’ve set the Docker CMD to ["/bin/sh"], you could simplify the GitHub
-    # # Actions command to:
-    # - name: Run Tests
-    #   run: |
-    #     docker run --rm user/app:latest rebar3 eunit
