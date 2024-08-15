@@ -40,4 +40,4 @@ jobs:
 
     - name: Run Tests
       run: |
-        docker run --rm user/app:latest rebar3 autotest
+        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 autotest"
