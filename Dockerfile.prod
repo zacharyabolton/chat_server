@@ -42,7 +42,7 @@ WORKDIR /opt/chat_server
 ENV COOKIE=chat_server \
     # write files generated during startup to /tmp
     RELX_OUT_FILE_PATH=/tmp \
-    # Default environment variables
+    # chat_server specific env variables to act as defaults
     DB_HOST=127.0.0.1 \
     LOGGER_LEVEL=debug \
     ENV=production \

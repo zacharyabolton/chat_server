@@ -1,0 +1,30 @@
+{
+  application, chat_server,
+  [
+    {description, "Chat server application"},
+    {vsn, "0.0.100"},
+    {registered, [chat_server_sup]},
+    {mod, {chat_server_app, []}},
+    {
+      applications,
+      [
+        kernel,
+        stdlib,
+        cowboy,
+        jsx
+      ]
+    },
+    {env, []},
+    {
+      modules,
+      [
+        chat_server_app,
+        chat_server_sup,
+        hello_handler,
+        keep_alive
+      ]
+    },
+    {licenses, ["Apache 2.0"]},
+    {links, []}
+  ]
+}.

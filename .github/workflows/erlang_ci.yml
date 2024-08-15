@@ -31,7 +31,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: Dockerfile
+        file: Dockerfile.test
         push: false
         load: true
         tags: user/app:latest
