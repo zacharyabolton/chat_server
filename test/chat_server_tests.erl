@@ -11,7 +11,7 @@
 
 dummy_test() ->
   io:format("Dummy test~n"),
-  ?assert(true).
+  ?assert(false).
 
 % top_lvl_sup_alive_test() ->
 %   ok = application:start(chat_server),
