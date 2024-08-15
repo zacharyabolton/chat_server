@@ -5,18 +5,20 @@ FROM erlang:alpine AS builder
 WORKDIR /app/src
 ENV REBAR_BASE_DIR=/app/_build
 
+# Remove unnecessary files
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
-# build and cache dependencies as their own layer
+# Copy all necessary files
 COPY rebar.config rebar.lock .
+# build and cache dependencies as their own layer
 RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
     rebar3 as dev compile
 
 FROM builder AS compiled
 
-RUN --mount=target=. \
-    --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as dev compile
+# RUN --mount=target=. \
+#     --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
+#     rebar3 as dev compile
 
 FROM compiled AS releaser
 

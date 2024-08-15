@@ -1,0 +1,10 @@
+services:
+
+  chat_server_test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    ports:
+      - "8080:8080"
+    environment:
+      - ENV=test
