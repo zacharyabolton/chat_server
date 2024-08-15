@@ -54,8 +54,8 @@ ENV COOKIE=chat_server \
 COPY --from=releaser /opt/rel .
 
 # Adjust entrypoint to use shell if needed for debugging
-ENTRYPOINT ["/opt/chat_server/bin/chat_server"]
-# CMD ["/bin/sh"]
+# ENTRYPOINT ["/opt/chat_server/bin/chat_server"]
+CMD ["/bin/sh"]
 
 # Ensure that the entrypoint script can execute rebar3 commands
-CMD ["foreground"]
+# CMD ["foreground"]
