@@ -38,11 +38,11 @@ jobs:
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
-    # - name: Run Tests
-    #   run: |
-    #     docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 eunit"
-    # If you’ve set the Docker CMD to ["/bin/sh"], you could simplify the GitHub
-    # Actions command to:
     - name: Run Tests
       run: |
-        docker run --rm user/app:latest rebar3 eunit
+        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 eunit"
+    # # If you’ve set the Docker CMD to ["/bin/sh"], you could simplify the GitHub
+    # # Actions command to:
+    # - name: Run Tests
+    #   run: |
+    #     docker run --rm user/app:latest rebar3 eunit
