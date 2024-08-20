@@ -41,12 +41,3 @@ jobs:
     - name: Run Tests
       run: |
         docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 do eunit, ct"
-
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      if: always()
-      with:
-        name: test-results
-        path: |
-          _build/test/logs
-          _build/test/lib/chat_server/test
