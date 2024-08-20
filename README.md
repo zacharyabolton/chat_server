@@ -48,20 +48,43 @@ This project is licensed under the Apache License 2.0.
 
 ### 🧪 Running Tests
 
-Tests are set up to run automatically on code changes, fitting the Test Driven
+We use a combination of EUnit and Common Test for our testing strategy. Tests 
+are set up to run automatically on code changes, fitting the Test Driven 
 Development (TDD) lifecycle.
 
-1. **Install `rebar3_autotest` globally:**
+#### Setting up Automatic Test Running
 
-   - [github.com/NobbZ/rebar3_autotest](https://github.com/NobbZ/rebar3_autotest)
+1. **Install the `rebar3_auto` plugin globally:**
+   
+   Add the following to your `~/.config/rebar3/rebar.config` file:
 
-2. **Run the autotest command** in your project's root:
-   ```sh
-   rebar3 autotest
+   ```erlang
+   {plugins, [rebar3_auto]}.
    ```
 
-This command will run all unit tests in the `./test` directory whenever a file
-changes in the `./src` directory.
+2. **Install the file watcher tool `entr`:**
+   
+   On macOS with Homebrew:
+   ```sh
+   brew install entr
+   ```
+   
+   For other systems, refer to the [entr installation guide](https://github.com/eradman/entr#installation).
+
+3. **Run the automatic test watcher:**
+
+   From the project root, run:
+   ```sh
+   ./watch_and_test.sh
+   ```
+
+   This will run both EUnit and Common Test whenever a `.erl` or `.hrl` file changes in the `src` or `test` directories.
+
+4. **Stop the watcher:**
+   
+   Press `Ctrl + C` in the terminal where `watch_and_test.sh` is running.
+
+The `run_tests.sh` and `watch_and_test.sh` scripts are already included in the repository, so you don't need to create them manually.
 
 ### 🏭 Production Setup
 
