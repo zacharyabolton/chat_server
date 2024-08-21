@@ -40,13 +40,12 @@ end_per_testcase(_TestCase, _Config) ->
     ok.
 
 test_chat_server_app_starts(Config) ->
-    % RunningApps = ?config(running_apps, Config),
-    % ct:log("Running apps in test: ~p", [RunningApps]),
-    % ?assert(lists:keymember(chat_server, 1, RunningApps)),
-    % SupervisorPid = whereis(chat_server_sup),
-    % ct:log("chat_server_sup pid: ~p", [SupervisorPid]),
-    % ?assert(is_pid(SupervisorPid)).
-    ?assert(false).
+    RunningApps = ?config(running_apps, Config),
+    ct:log("Running apps in test: ~p", [RunningApps]),
+    ?assert(lists:keymember(chat_server, 1, RunningApps)),
+    SupervisorPid = whereis(chat_server_sup),
+    ct:log("chat_server_sup pid: ~p", [SupervisorPid]),
+    ?assert(is_pid(SupervisorPid)).
 
 % test_keep_alive_process(_Config) ->
 %     KeepAlivePid = whereis(keep_alive),
