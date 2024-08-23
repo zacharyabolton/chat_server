@@ -19,11 +19,20 @@ _checkouts
 _vendor
 rebar3.crashdump
 
+# Docker
+Dockerfile
+Dockerfile.prod
+Dockerfile.test
+
+# Heroku
+heroku.yml
+
 # Ignore Erlang specific files and directories
 .eunit
 .erlang.cookie
 erl_crash.dump
 *.plt
+.concrete/DEV_MODE
 
 # Ignore logs
 log/
@@ -57,3 +66,10 @@ images/
 
 # Ignore websocket-test-page.html
 websocket-test-page.html
+
+# Misc
+.env
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+README.md
