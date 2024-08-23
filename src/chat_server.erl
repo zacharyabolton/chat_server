@@ -33,12 +33,4 @@ stop(_State) ->
 %%====================================================================
 
 get_port() ->
-    case application:get_env(chat_server, port) of
-        {ok, Port} ->
-            io:format("Using configured port: ~p~n", [Port]),
-            Port;
-        undefined ->
-            DefaultPort = 8080,
-            io:format("No port configured, using default ~p~n", [DefaultPort]),
-            DefaultPort
-    end.
+  application:get_env(chat_server, port, 8081).

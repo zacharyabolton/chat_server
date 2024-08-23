@@ -12,12 +12,12 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 COPY . /app/src/
 # build and cache dependencies as their own layer
 RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as test compile
+    rebar3 as dev compile
 
 # Compile including tests but do not tar it
 RUN --mount=target=. \
     --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as test compile
+    rebar3 as dev compile
 
 # Final stage
 FROM erlang:alpine AS runner
@@ -38,4 +38,3 @@ COPY --from=builder /app/src /opt/chat_server
 
 # Set entrypoint to shell for running tests
 ENTRYPOINT ["/bin/sh"]
-# CMD ["/bin/sh", "-c", "rebar3 as test do eunit, ct"]

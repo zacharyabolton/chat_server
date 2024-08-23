@@ -22,6 +22,8 @@ This project is licensed under the Apache License 2.0.
   Hebert, and Evan Vigil-McClanahan
 - [The Cowboy Documentation](https://ninenines.eu/docs/en/cowboy/2.9/guide/) by
   Loïc Hoguin
+- [Learn You Some Erlang for Great Good!](https://learnyousomeerlang.com/) by
+  Fred Hebert
 - ... and of course a myriad of other resources and contributors
 
 ## 🚀 Getting Started
@@ -48,43 +50,66 @@ This project is licensed under the Apache License 2.0.
 
 ### 🧪 Running Tests
 
-We use a combination of EUnit and Common Test for our testing strategy. Tests 
-are set up to run automatically on code changes, fitting the Test Driven 
-Development (TDD) lifecycle.
+This project uses a combination of EUnit and Common Test for its testing
+strategy. Tests are set up to run automatically on code changes, fitting the
+Test Driven Development (TDD) lifecycle.
 
 #### Setting up Automatic Test Running
 
-1. **Install the `rebar3_auto` plugin globally:**
-   
-   Add the following to your `~/.config/rebar3/rebar.config` file:
+1. **Install the file watcher tool `entr`:**
 
-   ```erlang
-   {plugins, [rebar3_auto]}.
-   ```
-
-2. **Install the file watcher tool `entr`:**
-   
    On macOS with Homebrew:
+
    ```sh
    brew install entr
    ```
-   
-   For other systems, refer to the [entr installation guide](https://github.com/eradman/entr#installation).
 
-3. **Run the automatic test watcher:**
+   For other systems, refer to the [entr installation
+   guide](https://github.com/eradman/entr#installation).
+
+2. **Run the automatic test watcher:**
 
    From the project root, run:
+
    ```sh
    ./watch_and_test.sh
    ```
 
-   This will run both EUnit and Common Test whenever a `.erl` or `.hrl` file changes in the `src` or `test` directories.
+   This will run both EUnit and Common Test whenever a `.erl` or `.hrl` file
+   changes in the `src` or `test` directories.
 
-4. **Stop the watcher:**
-   
+3. **Stop the watcher:**
+
    Press `Ctrl + C` in the terminal where `watch_and_test.sh` is running.
 
-The `run_tests.sh` and `watch_and_test.sh` scripts are already included in the repository, so you don't need to create them manually.
+The `run_tests.sh` and `watch_and_test.sh` scripts are already included in the
+repository, so you don't need to create them manually.
+
+When running the application directly with `rebar3` (e.g., using `rebar3 shell`,
+`rebar3 eunit`, or `rebar3 ct`), the application uses a default port of 8081.
+This differs from execution in release-based environments (development
+containers, production, and CI), which use port 8080.
+
+**Important Note for Contributors:**
+
+- When executed directly with `rebar3`, the application will use port 8081 by
+  default.
+- This default port is hard-coded and not configurable through the usual
+  configuration files when running directly with `rebar3`.
+- If you need to change this port for non-release execution, you'll need to
+  modify the `get_port/0` function in `src/chat_server.erl`.
+- Remember that this port (8081) is specifically for non-release execution and
+  does not affect release-based environments.
+
+Example of the relevant code in `src/chat_server.erl`:
+
+```erlang
+get_port() ->
+  application:get_env(chat_server, port, 8081).
+```
+
+Please be aware of this distinction when running the application directly with
+`rebar3` versus in a release-based environment.
 
 ### 🏭 Production Setup
 
@@ -98,15 +123,6 @@ The `run_tests.sh` and `watch_and_test.sh` scripts are already included in the r
    ```sh
    docker-compose -f docker-compose.prod.yml up
    ```
-
-## 📂 Project Structure
-
-- **src/**: Erlang source files.
-- **Dockerfile**: Development Dockerfile.
-- **Dockerfile.prod**: Production Dockerfile.
-- **docker-compose.yml**: Docker Compose configuration for development.
-- **docker-compose.prod.yml**: Docker Compose configuration for production.
-- **rebar.config**: Main rebar3 configuration file.
 
 ## 🤝 Contributing
 

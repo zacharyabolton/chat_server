@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "Running EUnit tests..."
-rebar3 as test eunit
+rebar3 eunit
 
 echo "Running Common Tests..."
-rebar3 as test ct -v
+rebar3 ct -v
 
 if [ $? -eq 0 ]; then
     echo "All tests passed!"
