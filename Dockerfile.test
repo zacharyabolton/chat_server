@@ -38,3 +38,4 @@ COPY --from=builder /app/src /opt/chat_server
 
 # Set entrypoint to shell for running tests
 ENTRYPOINT ["/bin/sh"]
+# CMD ["/bin/sh", "-c", "rebar3 as test do eunit, ct"]
