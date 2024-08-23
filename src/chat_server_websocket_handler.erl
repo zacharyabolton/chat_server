@@ -16,6 +16,7 @@ init(Req, _Opts) ->
 
 %% Handle incoming WebSocket frames (minimal implementation)
 websocket_handle(_Frame, State) ->
+    io:format("Received frame: ~p~n", [_Frame]),
     {ok, State}.
 
 %% Handle other messages (minimal implementation)
