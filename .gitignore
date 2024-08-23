@@ -56,3 +56,6 @@ rebar.config.local
 
 # Ignore project images
 images/
+
+# Ignore websocket-test-page.html
+websocket-test-page.html

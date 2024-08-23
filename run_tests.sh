@@ -4,7 +4,7 @@ echo "Running EUnit tests..."
 rebar3 eunit
 
 echo "Running Common Tests..."
-rebar3 ct
+rebar3 ct -v
 
 if [ $? -eq 0 ]; then
     echo "All tests passed!"

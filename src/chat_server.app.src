@@ -1,8 +1,9 @@
 {application, chat_server,
- [{description, "Chat server application"},
+ [
+  {description, "Chat server application"},
   {vsn, "0.1.0"},
   {registered, [chat_server_sup]},
-  {mod, {chat_server_app, []}},
+  {mod, {chat_server, []}},
   {applications,
    [kernel,
     stdlib,
@@ -10,8 +11,16 @@
     jsx
    ]},
   {env,[]},
-  {modules, []},
-
+  {modules, [
+    chat_server,
+    chat_server_sup,
+    chat_server_websocket_handler,
+    chat_logic,
+    connection_manager,
+    chat_session,
+    chat_client,
+    router
+  ]},
   {licenses, ["Apache 2.0"]},
   {links, []}
  ]}.
