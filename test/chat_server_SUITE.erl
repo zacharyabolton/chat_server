@@ -13,36 +13,6 @@
 
 all() -> [test_chat_server_starts].
 
-
-% end_per_suite(_Config) ->
-%   application:stop(chat_server),
-%   ok.
-%
-% init_per_testcase(_TestCase, Config) ->
-%   Config.
-%
-% end_per_testcase(_TestCase, _Config) ->
-%   ok.
-%
-% test_chat_server_starts(Config) ->
-%   RunningApps = ?config(running_apps, Config),
-%   ?assert(lists:keymember(chat_server, 1, RunningApps)).
-%   % SupervisorPid = whereis(chat_server_sup),
-%   % ?assert(is_pid(SupervisorPid)).
-%
-% % test_chat_server_starts(Config) ->
-% %   % Bla = application:ensure_all_started(chat_server),
-% %   ?assert(true).
-% %   % RunningApps = application:which_applications(),
-% %   % ?assert(lists:keymember(chat_server, 1, RunningApps)).
-
-% init_per_suite(Config) ->
-%   application:load(chat_server),
-%   application:get_all_env(chat_server),
-%   application:ensure_all_started(chat_server),
-%   RunningApps = application:which_applications(),
-%   [{running_apps, RunningApps} | Config].
-%
 init_per_suite(Config) ->
   application:load(chat_server),
   {ok, [AppConfig]} = file:consult(config_path()),

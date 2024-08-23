@@ -12,12 +12,12 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 COPY . /app/src/
 # build and cache dependencies as their own layer
 RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as dev compile
+    rebar3 as test compile
 
 # Compile including tests but do not tar it
 RUN --mount=target=. \
     --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as dev compile
+    rebar3 as test compile
 
 # Final stage
 FROM erlang:alpine AS runner
