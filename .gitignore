@@ -19,6 +19,7 @@ rebar3.crashdump
 .erlang.cookie
 erl_crash.dump
 *.plt
+.concrete/DEV_MODE
 
 # Ignore logs
 log
@@ -59,3 +60,8 @@ images/
 
 # Ignore websocket-test-page.html
 websocket-test-page.html
+
+# Heroku
+npm-debug.log
+yarn-debug.log
+yarn-error.log
