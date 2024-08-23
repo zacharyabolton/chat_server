@@ -28,10 +28,10 @@ This project is licensed under the Apache License 2.0.
 
 ## 🚀 Getting Started
 
-### 📚 Prerequisites
+### 📚 Requirements
 
-- Erlang/OTP 26
-- Rebar3
+- Erlang/OTP 26 Erts 14.2.5
+- rebar 3.23.0
 - Docker
 - Docker Compose
 
