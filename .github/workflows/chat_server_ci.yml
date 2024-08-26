@@ -16,8 +16,8 @@ jobs:
     - name: Set up Erlang
       uses: erlef/setup-beam@v1
       with:
-        otp-version: '24.0'
-        rebar3-version: '3.14'
+        otp-version: '26.0'
+        rebar3-version: '3.23.0'
     - name: Compile
       run: rebar3 compile
     - name: Run tests
