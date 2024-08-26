@@ -9,32 +9,22 @@ ENV REBAR_BASE_DIR=/app/_build
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
 # Copy all necessary files
-COPY rebar.config rebar.lock ./
-# build and cache dependencies as their own layer
+COPY . /app/src/
+
+# Build and cache dependencies
 RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
     rebar3 as dev compile
 
-FROM builder AS compiled
-
-RUN --mount=target=. \
-    --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as dev compile
-
-FROM compiled AS releaser
-
-WORKDIR /app/src
-
-# create the directory to unpack the release to
+# Create the directory to unpack the release to
 RUN mkdir -p /opt/rel
 
-# build the release tarball and then unpack
-# to be copied into the image built in the next stage
-RUN --mount=target=. \
-    --mount=id=hex-cache,type=cache,target=/root/.cache/rebar3 \
+# Build the release tarball and then unpack
+RUN --mount=id=hex-cache,type=cache,target=/root/.cache/rebar3 \
+    rebar3 as dev release && \
     rebar3 as dev tar && \
     tar -zxvf $REBAR_BASE_DIR/dev/rel/*/*.tar.gz -C /opt/rel
 
-# final stage
+# Final stage
 FROM erlang:alpine AS runner
 
 WORKDIR /opt/chat_server
@@ -50,7 +40,7 @@ ENV COOKIE=chat_server \
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
-COPY --from=releaser /opt/rel .
+COPY --from=builder /opt/rel .
 
 ENTRYPOINT ["/opt/chat_server/bin/chat_server"]
 CMD ["foreground"]
