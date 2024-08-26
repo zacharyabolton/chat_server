@@ -16,9 +16,9 @@ RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
 
 FROM builder AS prod_compiled
 
-# RUN --mount=target=. \
-#     --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-#     rebar3 as prod compile
+RUN --mount=target=. \
+    --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
+    rebar3 as prod compile
 
 FROM prod_compiled AS releaser
 
