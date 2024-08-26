@@ -9,45 +9,20 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Cache Docker layers
-      uses: actions/cache@v2
+    - uses: actions/checkout@v2
+    - name: Set up Erlang
+      uses: erlef/setup-beam@v1
       with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-
-    - name: Build Docker Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: Dockerfile.test
-        push: false
-        load: true
-        tags: user/app:latest
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
-
-    - name: Run Tests
-      run: |
-        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 as dev do eunit, ct"
-
-    - name: Run Coverage Report
-      run: |
-        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 as dev do cover"
-
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage-report
-        path: _build/dev+test/cover/index.html
+        otp-version: '24.0'
+        rebar3-version: '3.14'
+    - name: Compile
+      run: rebar3 compile
+    - name: Run tests
+      run: rebar3 do eunit, ct
+    - name: Run dialyzer
+      run: rebar3 dialyzer
+    - name: Run coverage
+      run: rebar3 cover
