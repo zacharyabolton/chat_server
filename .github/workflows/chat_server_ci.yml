@@ -40,10 +40,14 @@ jobs:
 
     - name: Run Tests
       run: |
-        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 do eunit --cover, ct --cover"
+        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 as dev do eunit, ct"
+
+    - name: Run Coverage Report
+      run: |
+        docker run --rm --entrypoint "/bin/sh" user/app:latest -c "rebar3 as dev do cover"
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
         name: code-coverage-report
-        path: /opt/chat_server/_build/test/cover/index.html
+        path: _build/dev+test/cover/index.html
