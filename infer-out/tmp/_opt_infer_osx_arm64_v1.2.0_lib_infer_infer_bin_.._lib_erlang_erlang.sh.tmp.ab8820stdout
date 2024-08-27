@@ -1,0 +1,15 @@
+export ERL_LIBS="/var/folders/l2/g5pq_4kj4x7fxdjx_zj7zrb00000gn/T/tmp.zWMV95Byjc:$ERL_LIBS"; export REBAR_CONFIG="/var/folders/l2/g5pq_4kj4x7fxdjx_zj7zrb00000gn/T/tmp.M4nq5Da9K5.script"; rebar3 compile && /opt/infer-osx-arm64-v1.2.0/lib/infer/infer/bin/../lib/erlang/extract.escript --list /var/folders/l2/g5pq_4kj4x7fxdjx_zj7zrb00000gn/T/tmp.VMgW4w8zOE.list  /Users/zacbolton/dev/chat_server/infer-out/tmp/rebar3.tmp.1b8273infer
+===> Verifying dependencies...
+===> Fetching cowboy v2.9.0
+===> Fetching jsx v3.0.0
+===> Fetching cowlib v2.11.0
+===> Fetching ranch v1.8.0
+===> Analyzing applications...
+===> Compiling jsx
+===> Compiling cowlib
+_build/default/lib/cowlib/src/cow_sse.erl:56:29: Warning: type variable 'State' is only used once (is unbound)
+
+===> Compiling ranch
+===> Compiling cowboy
+===> Analyzing applications...
+===> Compiling chat_server
