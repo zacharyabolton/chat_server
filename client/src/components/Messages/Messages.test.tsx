@@ -7,5 +7,4 @@ test('renders Messages component', () => {
   // ... test implementation
 });
 
-// Alternatively, if no imports are needed, add an empty export at the end
 export {};
