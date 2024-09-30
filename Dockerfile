@@ -1,32 +1,55 @@
-# Base image
-FROM erlang:alpine AS builder
+# Stage 1: Build the React app
+FROM node:22-alpine AS frontend-builder
+
+# Set the working directory
+WORKDIR /app/client
+
+# Copy package.json and package-lock.json
+COPY client/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the React app source code
+COPY client/ ./
+
+# Build the React app
+RUN npm run build
+
+# Stage 2: Build the Erlang app
+FROM erlang:alpine AS backend-builder
 
 # Set the working directory
 WORKDIR /app/src
 ENV REBAR_BASE_DIR=/app/_build
 
-# Remove unnecessary files
+# Remove unnecessary files (optional cleanup)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
 # Copy all necessary files
-COPY . /app/src/
+COPY server/ /app/src/
+
+# Create the priv/static directory if it doesn't exist
+RUN mkdir -p /app/src/priv/static/
+
+# Copy the React build output into the Erlang app's priv/static directory
+COPY --from=frontend-builder /app/client/build/ /app/src/priv/static/
 
 # Build and cache dependencies
-RUN --mount=id=hex-cache,type=cache,sharing=locked,target=/root/.cache/rebar3 \
-    rebar3 as dev compile
+RUN rebar3 as dev compile
 
 # Create the directory to unpack the release to
 RUN mkdir -p /opt/rel
 
 # Build the release tarball and then unpack
-RUN --mount=id=hex-cache,type=cache,target=/root/.cache/rebar3 \
-    rebar3 as dev release && \
+RUN rebar3 as dev release && \
     rebar3 as dev tar && \
     tar -zxvf $REBAR_BASE_DIR/dev/rel/*/*.tar.gz -C /opt/rel
 
-# Final stage
+# Stage 3: Final image
 FROM erlang:alpine AS runner
 
+# Set the working directory
 WORKDIR /opt/chat_server
 
 ENV COOKIE=chat_server \
@@ -38,9 +61,11 @@ ENV COOKIE=chat_server \
     ENV=development \
     SBWT=none
 
+# Remove unnecessary files (optional cleanup)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
-COPY --from=builder /opt/rel .
+# Copy the release from the backend builder stage
+COPY --from=backend-builder /opt/rel .
 
 ENTRYPOINT ["/opt/chat_server/bin/chat_server"]
 CMD ["foreground"]

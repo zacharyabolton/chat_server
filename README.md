@@ -3,16 +3,52 @@
 ![CI Status](https://github.com/zacharyabolton/chat_server/workflows/chat_server%20CI/badge.svg)
 ![Erlang Version](https://img.shields.io/badge/Erlang-OTP%2026-blue)
 ![Rebar3 Version](https://img.shields.io/badge/Rebar3-3.23.0-blue)
+![Node.js Version](https://img.shields.io/badge/Node.js-22.9.0-blue)
 ![Project Status](https://img.shields.io/badge/status-in%20development-yellow)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px">
-  <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" style="width: 100px; height: auto;"/>
-  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" style="width: 100px; height: auto;"/>
+<div align="center">
+  <img src="https://www.erlang.org/favicon.ico" alt="Erlang Logo" width="80" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="80" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo" width="80" />
 </div>
 
-A simple chat server built with Erlang and Docker.
+A simple chat application built with **Erlang** (backend) and **React with TypeScript** (frontend), containerized using **Docker**.
+
+---
+
+## 📋 Table of Contents
+
+- [Features](#features)
+- [License](#license)
+- [Honorable Mentions](#honorable-mentions)
+- [Getting Started](#getting-started)
+  - [Requirements](#requirements)
+  - [Development Setup](#development-setup)
+    - [Running the Backend](#running-the-backend)
+    - [Running the Frontend](#running-the-frontend)
+  - [Running Tests](#running-tests)
+    - [Backend Tests](#backend-tests)
+    - [Frontend Tests](#frontend-tests)
+  - [Production Setup](#production-setup)
+- [Contributing](#contributing)
+- [Contact](#contact)
+- [Notes](#notes)
+
+---
+
+## 🌟 Features
+
+- **Real-time Communication:** WebSocket-based chat functionality.
+- **Scalable Architecture:** Backend built with Erlang/OTP for high concurrency and fault tolerance.
+- **Modern Frontend:** Responsive UI built with React and TypeScript.
+- **Containerization:** Easy deployment using Docker and Docker Compose.
+- **Continuous Integration:** Automated testing and building with GitHub Actions.
+
+---
 
 ## 📝 License
 
@@ -33,12 +69,81 @@ This project is licensed under the Apache License 2.0.
 
 ### 📚 Requirements
 
-- Erlang/OTP 26 Erts 14.2.5
-- rebar 3.23.0
-- Docker
-- Docker Compose
+- **Erlang/OTP 26 Erts 14.2.5**
+- **rebar 3.23.0**
+- **Node.js 18.x**
+- **Docker**
+- **Docker Compose**
 
 ### 🛠️ Development Setup
+
+#### **Project Structure**
+
+```
+.
+├── client/ # React frontend
+└── server/ # Erlang backend
+```
+
+#### **Running the Backend**
+
+1. **Navigate to the `server` directory:**
+
+   ```sh
+   cd server
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   rebar3 get-deps
+   ```
+
+3. **Compile the backend:**
+
+   ```sh
+   rebar3 compile
+   ```
+
+4. **Run the backend server:**
+
+   ```sh
+   rebar3 shell
+   ```
+
+   - The backend runs on port 8080 by default.
+
+#### **Running the Frontend**
+
+1. **Navigate to the `client` directory:**
+
+   ```sh
+   cd client
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   npm install
+   ```
+
+3. **Start the development server:**
+
+   ```sh
+   npm start
+   ```
+
+   - The frontend runs on port 3000 by default.
+   - The app should automatically open in your default browser.
+   - The frontend is configured to proxy API requests to the backend.
+
+#### **Using Docker Compose (Alternative)**
+
+_NOTE_: Hot reloading is much slower when using Docker Compose compared to
+running the frontend and backend separately.
+
+For an integrated development environment, you can use Docker Compose to run
+both the frontend and backend:
 
 1. **Build the Docker image:**
 
@@ -47,99 +152,160 @@ This project is licensed under the Apache License 2.0.
    ```
 
 2. **Start the server** (with live code reloading):
+
    ```sh
    docker-compose up chat_server_development --watch
    ```
 
+3. **Access the application:**
+   - Visit [http://localhost:8080](http://localhost:8080) to access the frontend
+     served by the backend.
+
 ### 🧪 Running Tests
 
-This project uses a combination of EUnit and Common Test for its testing
-strategy. Tests are set up to run automatically on code changes, fitting the
-Test Driven Development (TDD) lifecycle.
+#### **Backend Tests**
 
-#### Setting up Automatic Test Running
-
-1. **Install the file watcher tool `entr`:**
-
-   On macOS with Homebrew:
+1. **Navigate to the `server` directory:**
 
    ```sh
-   brew install entr
+   cd server
    ```
 
-   For other systems, refer to the [entr installation
-   guide](https://github.com/eradman/entr#installation).
-
-2. **Run the automatic test watcher:**
-
-   From the project root, run:
+2. **Run EUnit and Common Test suites:**
 
    ```sh
-   ./watch_and_test.sh
+   rebar3 do eunit, ct
    ```
 
-   This will run both EUnit and Common Test whenever a `.erl` or `.hrl` file
-   changes in the `src` or `test` directories.
+3. **Run Dialyzer for static analysis:**
 
-3. **Stop the watcher:**
+   ```sh
+   rebar3 dialyzer
+   ```
 
-   Press `Ctrl + C` in the terminal where `watch_and_test.sh` is running.
+#### **Frontend Tests**
 
-The `run_tests.sh` and `watch_and_test.sh` scripts are already included in the
-repository, so you don't need to create them manually.
+1. **Navigate to the `client` directory:**
 
-When running the application directly with `rebar3` (e.g., using `rebar3 shell`,
-`rebar3 eunit`, or `rebar3 ct`), the application uses a default port of 8081.
-This differs from execution in release-based environments (development
-containers, production, and CI), which use port 8080.
+   ```sh
+   cd client
+   ```
 
-**Important Note for Contributors:**
+2. **Run tests:**
 
-- When executed directly with `rebar3`, the application will use port 8081 by
-  default.
-- This default port is hard-coded and not configurable through the usual
-  configuration files when running directly with `rebar3`.
-- If you need to change this port for non-release execution, you'll need to
-  modify the `get_port/0` function in `src/chat_server.erl`.
-- Remember that this port (8081) is specifically for non-release execution and
-  does not affect release-based environments.
+   ```sh
+   npm test
+   ```
 
-Example of the relevant code in `src/chat_server.erl`:
+   - Press `a` to run all tests.
 
-```erlang
-get_port() ->
-  application:get_env(chat_server, port, 8081).
-```
+3. **Run ESLint for linting:**
 
-Please be aware of this distinction when running the application directly with
-`rebar3` versus in a release-based environment.
+   ```sh
+   npm run lint
+   ```
+
+---
 
 ### 🏭 Production Setup
 
-1. **Build the production Docker image:**
+#### **Build the Production Docker Image**
+
+1. **Build the Docker image:**
 
    ```sh
-   docker-compose down; docker-compose -f docker-compose.prod.yml build
+   docker-compose -f docker-compose.prod.yml build
    ```
 
 2. **Start the server in production mode:**
+
    ```sh
    docker-compose -f docker-compose.prod.yml up
    ```
 
-## 🤝 Contributing
+3. **Access the application:**
 
-Contributions are welcome! If you find this project useful or have ideas for
-improvements, please fork the repository and create a pull request.
-
-## 📧 Contact
-
-For any questions or inquiries, please contact [Zac Bolton](mailto:zacbolton2129@gmail.com).
+   - Visit `http://localhost:8080` to access the application.
 
 ---
 
-### 📝 Notes
+## 🤝 Contributing
 
-This project serves as a practical example of Erlang development and Docker
-containerization. It aims to provide a solid foundation for further development
-and potential commercial use. Feedback and suggestions are greatly appreciated.
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository.**
+
+2. **Create a new branch:**
+
+   ```sh
+   git checkout -b feature/YourFeature
+   ```
+
+3. **Make your changes and commit them:**
+
+   ```sh
+   git commit -m 'Add some feature'
+   ```
+
+4. **Push to the branch:**
+
+   ```sh
+   git push origin feature/YourFeature
+   ```
+
+5. **Open a pull request.**
+
+---
+
+## 📧 Contact
+
+For any questions or inquiries, please contact [Zac
+Bolton](mailto:zacbolton2129@gmail.com).
+
+---
+
+## 📝 Notes
+
+This project serves as a practical example of Erlang and React development with
+Docker containerization. It aims to provide a solid foundation for further
+development and potential commercial use. Feedback and suggestions are greatly
+appreciated.
+
+---
+
+## 📄 Additional Resources
+
+- **CI/CD Pipeline:**
+
+  - The project uses GitHub Actions for continuous integration (CI).
+  - The pipeline includes testing, and building.
+  - See the [`.github/workflows/ci.yml`](.github/workflows/ci.yml) file for details.
+
+- **Caching and Optimization:**
+
+  - Dependencies are cached in the CI pipeline to speed up builds.
+  - Frontend and backend jobs run in parallel to reduce build times.
+
+---
+
+## 📦 Dependencies
+
+- **Backend:**
+
+  - Erlang/OTP 26
+  - rebar3
+
+- **Frontend:**
+
+  - React
+  - TypeScript
+  - Node.js 22.9.0
+  - npm
+
+---
+
+## ❤️ Acknowledgments
+
+Special thanks to all the contributors and the open-source community for their
+invaluable resources and support. See the [Honorable
+Mentions](#honorable-mentions) section for more details.
