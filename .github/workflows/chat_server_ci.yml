@@ -45,7 +45,7 @@ jobs:
 
       - name: Run frontend tests
         working-directory: client
-        run: npm test -- --watchAll=false --code-coverage
+        run: npm run test -- --watch=false --code-coverage
 
       - name: Build frontend
         working-directory: client
