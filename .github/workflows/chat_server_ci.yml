@@ -45,11 +45,17 @@ jobs:
 
       - name: Run frontend tests
         working-directory: client
-        run: npm test -- --watchAll=false
+        run: npm test -- --watchAll=false --code-coverage
 
       - name: Build frontend
         working-directory: client
         run: npm run build
+
+      - name: Archive coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./app-client/coverage
 
   backend:
     runs-on: ubuntu-latest
