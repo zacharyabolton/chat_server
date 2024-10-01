@@ -5,7 +5,7 @@ import { WebSocketContext } from './WebSocketContext';
 import './App.css';
 
 const App: React.FC = () => {
-  const { sendMessage } = useContext(WebSocketContext);
+  const { sendMessage, socket } = useContext(WebSocketContext);
   const [input, setInput] = useState('');
 
   const handleSend = () => {
@@ -13,10 +13,17 @@ const App: React.FC = () => {
     setInput('');
   };
 
+  const connectionStatus = socket
+    ? socket.readyState === WebSocket.OPEN
+      ? 'Connected'
+      : 'Connecting...'
+    : 'Disconnected';
+
   return (
     <div className='App'>
       <header className="App-header">
         <h1 className='App-title'>WebSocket Chat</h1>
+        <p>Status: {connectionStatus}</p>
         <input
           className="App-input"
           type="text"
@@ -26,7 +33,9 @@ const App: React.FC = () => {
         />
         <button
           className="App-send"
-          onClick={handleSend}>
+          onClick={handleSend}
+          disabled={!socket || socket.readyState !== WebSocket.OPEN}
+        >
           Send
         </button>
         <Messages /> {/* Render the Messages component */}

@@ -50,6 +50,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
+      setMessages((prev) => [...prev, `WebSocket error: ${error}`]);
     };
 
     return () => {
