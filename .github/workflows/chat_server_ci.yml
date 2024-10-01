@@ -9,42 +9,107 @@ on:
       - main
 
 jobs:
-  test:
+  frontend:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.9.0]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Erlang
-      uses: erlef/setup-beam@v1
-      with:
-        otp-version: '26.0'
-        rebar3-version: '3.23.0'
-    - name: Compile
-      run: rebar3 compile
-    - name: Run tests
-      run: rebar3 do eunit, ct
-    - name: Run dialyzer
-      run: rebar3 dialyzer
-    - name: Run coverage
-      run: rebar3 cover
-    - name: Archive coverage results
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage-report
-        path: _build/test/cover/index.html
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  security:
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install frontend dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Lint frontend
+        working-directory: client
+        run: npm run lint
+
+      - name: Audit frontend dependencies
+        working-directory: client
+        run: npm audit --production
+
+      - name: Run frontend tests
+        working-directory: client
+        run: npm test -- --watchAll=false --coverage
+
+      - name: Build frontend
+        working-directory: client
+        run: npm run build
+
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./client/coverage
+
+  backend:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        otp-version: ['26.0']
+        rebar3-version: ['3.23.0']
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Erlang
-      uses: erlef/setup-beam@v1
-      with:
-        otp-version: '26.0'
-        rebar3-version: '3.23.0'
-    - name: Run Infer
-      run: |
-        VERSION=1.2.0; \
-        curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux-x86_64-v$VERSION.tar.xz" \
-        | sudo tar -C /opt -xJ && \
-        sudo ln -s "/opt/infer-linux-x86_64-v$VERSION/bin/infer" /usr/local/bin/infer
-        infer run -- rebar3 compile
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Erlang/OPT ${{ matrix.otp-version }}, rebar3 ${{ matrix.rebar3-version }}
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp-version }}
+          rebar3-version: ${{ matrix.rebar3-version }}
+
+      - name: Cache rebar3 dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/rebar3/
+            server/_build/
+          key: ${{ runner.os }}-rebar3-${{ hashFiles('server/rebar.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-rebar3-
+
+      - name: Compile backend
+        working-directory: server
+        run: rebar3 compile
+
+      - name: Run backend tests
+        working-directory: server
+        run: rebar3 do eunit, ct
+
+      - name: Run dialyzer (static analysis)
+        working-directory: server
+        run: rebar3 dialyzer
+
+      - name: Generate coverage report
+        working-directory: server
+        run: rebar3 cover
+
+      - name: Archive coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: server/_build/test/cover/index.html
+
+      - name: Run Infer (static analysis)
+        working-directory: server
+        run: |
+          VERSION=1.2.0; \
+          curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux-x86_64-v$VERSION.tar.xz" \
+          | sudo tar -C /opt -xJ && \
+          sudo ln -s "/opt/infer-linux-x86_64-v$VERSION/bin/infer" /usr/local/bin/infer
+          infer run -- rebar3 compile

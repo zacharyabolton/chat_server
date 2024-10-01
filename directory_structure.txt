@@ -1,0 +1,73 @@
+.
+├── Dockerfile
+├── Dockerfile.prod
+├── LICENSE
+├── README.md
+├── brainstorming-adoptingerlang-docker.md
+├── brainstorming-react-client.md
+├── client
+│   ├── README.md
+│   ├── build
+│   │   ├── asset-manifest.json
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   ├── robots.txt
+│   │   └── static
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.test.tsx
+│   │   ├── App.tsx
+│   │   ├── WebSocketContext.tsx
+│   │   ├── components
+│   │   ├── index.css
+│   │   ├── index.tsx
+│   │   ├── logo.svg
+│   │   ├── react-app-env.d.ts
+│   │   ├── reportWebVitals.ts
+│   │   └── setupTests.ts
+│   └── tsconfig.json
+├── directory_structure.txt
+├── docker-compose.prod.yml
+├── docker-compose.yml
+└── server
+    ├── _build
+    │   └── default
+    ├── config
+    │   ├── sys.config.src
+    │   ├── sys_dev.config
+    │   ├── vm.args.src
+    │   └── vm_dev.args
+    ├── include
+    ├── priv
+    │   └── static
+    ├── rebar.config
+    ├── rebar.lock
+    ├── run_tests.sh
+    ├── src
+    │   ├── chat_client.erl
+    │   ├── chat_logic.erl
+    │   ├── chat_server.app.src
+    │   ├── chat_server.erl
+    │   ├── chat_server_sup.erl
+    │   ├── chat_server_websocket_handler.erl
+    │   ├── chat_session.erl
+    │   ├── connection_manager.erl
+    │   └── router.erl
+    ├── test
+    │   ├── chat_server_SUITE.erl
+    │   └── chat_server_tests.erl
+    └── watch_and_test.sh
+
+16 directories, 55 files

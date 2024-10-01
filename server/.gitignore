@@ -51,6 +51,13 @@ brainstorming*
 # Ignore environment files
 .env
 .env.prod
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
 
 # Ignore sensitive config information
 rebar.config.local

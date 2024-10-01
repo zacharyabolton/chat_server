@@ -12,5 +12,8 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: ./src
+          path: ./server/src
+          target: /app/src
+        - action: rebuild
+          path: ./client/src
           target: /app/src
