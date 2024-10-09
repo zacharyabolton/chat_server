@@ -8,14 +8,12 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
-%% Client state
--record(state, {client_pid}).
+%% Include the externalized state record
+-include_lib("include/chat_state.hrl").
 
-start_link_test() ->
-    ?assertMatch({ok, _Pid}, chat_client:start_link(self())).
-
-stop_test() ->
+start_link_and_stop_test() ->
     {ok, Pid} = chat_client:start_link(self()),
+    ?assert(is_process_alive(Pid)),
     chat_client:stop(Pid),
     ?assert(not is_process_alive(Pid)).
 
