@@ -53,8 +53,11 @@ stop(Pid) ->
 %% @end
 %%%-------------------------------------------------------------------
 init([]) ->
+    %% Create the ETS table for clients
     ets:new(?CLIENTS_TABLE, [set, named_table, public]),
-    {ok, #state{}}.
+
+    %% Initialize state with `client_pid` as 'undefined' initially
+    {ok, #state{client_pid=undefined}}.
 
 %%%-------------------------------------------------------------------
 %% @doc Asynchronously adds a client to the ETS table.
