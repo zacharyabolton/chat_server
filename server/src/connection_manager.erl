@@ -8,11 +8,11 @@
 -behaviour(gen_server).
 
 %% Public API
--export([start_link/1, stop/1]).
+-export([start_link/0, stop/1]).
 
 %% gen_server callbacks (required for the behavior)
--export([init/1, add_client/1, remove_client/1, route_message/1, handle_cast/2,
-         handle_call/3, terminate/2]).
+-export([init/1, add_client/1, remove_client/1, route_message/2, handle_info/2,
+         handle_cast/2, handle_call/3, terminate/2]).
 
 %% Include the externalized state record
 -include_lib("include/chat_state.hrl").
@@ -28,11 +28,10 @@
 %% @doc Starts a new connection_manager process linked to the caller.
 %% Initializes the ETS table for managing active WebSocket clients.
 %% This process will handle client registrations and message routing.
-%% @param Pid - The process identifier (Pid) of the connection_manager process.
 %% @end
 %%%-------------------------------------------------------------------
-start_link(Pid) ->
-    gen_server:start_link(?MODULE, Pid, []).
+start_link() ->
+    gen_server:start_link(?MODULE, [], []).
 
 %%%-------------------------------------------------------------------
 %% @doc Stops the connection_manager process by sending a stop message.
@@ -53,9 +52,9 @@ stop(Pid) ->
 %% @param Args - List of arguments, currently unused.
 %% @end
 %%%-------------------------------------------------------------------
-init(Pid) ->
+init([]) ->
     ets:new(?CLIENTS_TABLE, [set, named_table, public]),
-    {ok, #state{client_pid=Pid}}.
+    {ok, #state{}}.
 
 %%%-------------------------------------------------------------------
 %% @doc Asynchronously adds a client to the ETS table.
@@ -82,8 +81,8 @@ remove_client(ClientPid) ->
 %% @param Message - The message to route to a random client.
 %% @end
 %%%-------------------------------------------------------------------
-route_message(Message) ->
-    gen_server:call(self(), {route_message, Message}).
+route_message(Pid, Message) ->
+    gen_server:call(Pid, {route_message, Message}).
 
 %%%-------------------------------------------------------------------
 %% @doc Handles the `add_client`, `remove_client`, and `stop` asynchronous
@@ -107,6 +106,17 @@ handle_cast({remove_client, ClientPid}, State) ->
     {noreply, State};
 handle_cast(stop, State) ->
     {stop, normal, State}.
+
+%%%-------------------------------------------------------------------
+%% @doc Handles system or other unexpected messages.
+%% Currently logs and ignores unexpected messages.
+%% @param Info - The message received.
+%% @param State - The current state of the process.
+%% @end
+%%%-------------------------------------------------------------------
+handle_info(Info, State) ->
+    io:format("Received unexpected message: ~p~n", [Info]),
+    {noreply, State}.
 
 %%%-------------------------------------------------------------------
 %% @doc Handles the `route_message` synchronous request.
