@@ -7,14 +7,14 @@
 -module(chat_client).
 -behaviour(gen_server).
 
-%% Client state
--record(state, {client_pid}).
-
 %% Public API
 -export([start_link/1, stop/1, send_message/2]).
 
 %% gen_server callbacks (required for the behavior)
 -export([init/1, handle_cast/2, handle_call/3, handle_info/2, terminate/2]).
+
+%% Include the externalized state record
+-include_lib("include/chat_state.hrl").
 
 %%%-------------------------------------------------------------------
 %%% Public API
