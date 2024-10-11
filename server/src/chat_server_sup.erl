@@ -7,17 +7,20 @@
 -module(chat_server_sup).
 -behaviour(supervisor).
 
-% API
 -export([start_link/0]).
-
-%% Supervisor callbacks
 -export([init/1]).
 
--define(SERVER, ?MODULE).
-
 start_link() ->
-	supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
-    Processes = [],
+    Processes = [
+        %% Start the connection_manager
+        {connection_manager,
+         {connection_manager, start_link, []},
+         permanent,
+         5000,
+         worker,
+         [connection_manager]}
+    ],
     {ok, {{one_for_one, 1, 5}, Processes}}.
