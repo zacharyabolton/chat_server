@@ -5,23 +5,19 @@
 %%%-------------------------------------------------------------------
 
 -module(chat_server_websocket_handler_tests).
-
 -include_lib("eunit/include/eunit.hrl").
-
-%% Mock modules
--define(MOD, chat_server_websocket_handler).
 
 %%% Setup and teardown helpers for tests
 
-% setup() ->
-%     meck:new(connection_manager, [passthrough]),
-%     meck:new(chat_logic, [passthrough]),
-%     ok.
+setup() ->
+    meck:new(connection_manager, [passthrough]),
+    meck:new(chat_logic, [passthrough]),
+    ok.
 
-% teardown(_) ->
-%     meck:unload(connection_manager),
-%     meck:unload(chat_logic),
-%     ok.
+teardown() ->
+    meck:unload(connection_manager),
+    meck:unload(chat_logic),
+    ok.
 
 %%% Test cases
 
@@ -37,14 +33,25 @@
 %       fun test_terminate/1
 %      ]}.
 
-% test_init(_) ->
-%     meck:expect(connection_manager, add_client, fun(_) -> ok end),
-%     Req = #{},
-%     Result = ?MOD:init(Req, []),
-%     [
-%      ?_assertMatch({cowboy_websocket, Req, #{client_pid := _}}, Result),
-%      ?_assert(meck:called(connection_manager, add_client, '_'))
-%     ].
+init_test() ->
+    setup(),
+
+    Req = #{},
+    Result = chat_server_websocket_handler:init(Req, []),
+    ?assertMatch({cowboy_websocket, Req, #{}}, Result),
+
+    teardown().
+
+websocket_init_test() ->
+    setup(),
+
+    meck:expect(connection_manager, add_client, fun(_) -> ok end),
+    State = #{},
+    Result = chat_server_websocket_handler:websocket_init(State),
+    ?assertMatch({cowboy_websocket, Req, #{}}, Result),
+    ?assert(meck:called(connection_manager, add_client, '_')),
+
+    teardown().
 
 % test_websocket_handle_text(_) ->
 %     meck:expect(chat_logic, process_message, fun(_) -> ok end),

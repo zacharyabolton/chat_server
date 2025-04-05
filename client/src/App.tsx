@@ -9,8 +9,10 @@ const App: React.FC = () => {
   const [input, setInput] = useState('');
 
   const handleSend = () => {
-    sendMessage(input);
-    setInput('');
+    if (input.trim() !== '') {
+      sendMessage(input);
+      setInput('');
+    }
   };
 
   const connectionStatus = socket
@@ -22,7 +24,7 @@ const App: React.FC = () => {
   return (
     <div className='App'>
       <header className="App-header">
-        <h1 className='App-title'>WebSocket Chat</h1>
+        <h1 className='App-title'>Anonymous Messaging</h1>
         <p>Status: {connectionStatus}</p>
         <input
           className="App-input"
@@ -34,11 +36,11 @@ const App: React.FC = () => {
         <button
           className="App-send"
           onClick={handleSend}
-          disabled={!socket || socket.readyState !== WebSocket.OPEN}
+          disabled={!socket || socket.readyState !== WebSocket.OPEN || input.trim() === ''}
         >
           Send
         </button>
-        <Messages /> {/* Render the Messages component */}
+        <Messages />
       </header>
     </div>
   );

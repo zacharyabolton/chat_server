@@ -1,3 +1,4 @@
+// src/WebSocketContext.tsx
 import React, { createContext, useEffect, useRef, useState, ReactNode } from 'react';
 
 interface IWebSocketContext {
@@ -30,27 +31,35 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
       wsUrl = `${protocol}://${hostname}${port}/ws`;
     }
 
-    console.log(`Connecting to WebSocket at: ${wsUrl}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Connecting to WebSocket at: ${wsUrl}`);
+    }
+
     const ws = new WebSocket(wsUrl);
     socketRef.current = ws;
     setSocket(ws);
 
     ws.onopen = () => {
-      console.log('WebSocket connection opened');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('WebSocket connection opened');
+      }
     };
 
     ws.onmessage = (event) => {
-      console.log('Received:', event.data);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Received:', event.data);
+      }
       setMessages((prev) => [...prev, event.data]);
     };
 
     ws.onclose = () => {
-      console.log('WebSocket connection closed');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('WebSocket connection closed');
+      }
     };
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
-      setMessages((prev) => [...prev, `WebSocket error: ${error}`]);
     };
 
     return () => {

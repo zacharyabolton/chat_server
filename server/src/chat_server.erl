@@ -6,17 +6,17 @@
 
 -module(chat_server).
 -behaviour(application).
+
 %% Application callbacks
 -export([start/2, stop/1]).
 
 %%====================================================================
-%% API
+% API
 %%====================================================================
 
 start(_Type, _Args) ->
   io:format("Starting chat server~n"),
   Dispatch = router:dispatch(),
-  io:format("Dispatch: ~p~n", [Dispatch]),
   Port = get_port(),
   io:format("Starting cowboy on port ~p~n", [Port]),
   case cowboy:start_clear(http_listener,
@@ -43,7 +43,7 @@ stop(_State) ->
   end.
 
 %%====================================================================
-%% Internal functions
+% Internal functions
 %%====================================================================
 
 get_port() ->
